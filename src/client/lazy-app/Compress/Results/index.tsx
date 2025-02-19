@@ -21,7 +21,7 @@ interface State {
 }
 
 const loadingReactionDelay = 500;
-var _resultImageFile:File | null = null;
+var _resultImageFile:File;
 
 export default class Results extends Component<Props, State> {
   state: State = {
@@ -59,15 +59,6 @@ export default class Results extends Component<Props, State> {
     });
   };
 
-  private onCopy = () => {
-    // copy a image file into clipboard
-    console.log(_resultImageFile)
-    let b = new Blob([_resultImageFile], {type: _resultImageFile.type});
-    let ci = new ClipboardItem({[b.type]: b})
-    // @ts-ignore
-    navigator.clipboard.write([ci])
-  }
-
   render(
     { source, imageFile, downloadUrl, flipSide, typeLabel }: Props,
     { showLoadingState }: State,
@@ -81,7 +72,8 @@ export default class Results extends Component<Props, State> {
       diff = imageFile.size / source.file.size;
       const absolutePercent = Math.round(Math.abs(diff) * 100);
       percent = diff > 1 ? absolutePercent - 100 : 100 - absolutePercent;
-      _resultImageFile = imageFile;
+      Object.defineProperty(window, "_resultFile", imageFile);
+      console.log(window['_resultFile'])
     }
 
     return (
@@ -144,22 +136,6 @@ export default class Results extends Component<Props, State> {
           </svg>
           <div class={style.downloadIcon}>
             <DownloadIcon />
-          </div>
-          {showLoadingState && <loading-spinner />}
-        </a>
-        <a
-          class={showLoadingState ? style.downloadDisable : style.download}
-          href="#"
-          title="Copy result"
-          onClick={this.onCopy}
-        >
-          <svg class={style.downloadBlobs} viewBox="0 0 89.6 86.9">
-            <title>Copy</title>
-            <path d="M27.3 72c-8-4-15.6-12.3-16.9-21-1.2-8.7 4-17.8 10.5-26s14.4-15.6 24-16 21.2 6 28.6 16.5c7.4 10.5 10.8 25 6.6 34S64.1 71.8 54 73.6c-10.2 2-18.7 2.3-26.7-1.6z" />
-            <path d="M19.8 24.8c4.3-7.8 13-15 21.8-15.7 8.7-.8 17.5 4.8 25.4 11.8 7.8 6.9 14.8 15.2 14.7 24.9s-7.1 20.7-18 27.6c-10.8 6.8-25.5 9.5-34.2 4.8S18.1 61.6 16.7 51.4c-1.3-10.3-1.3-18.8 3-26.6z" />
-          </svg>
-          <div class={style.downloadIcon}>
-            <CopyIcon />
           </div>
           {showLoadingState && <loading-spinner />}
         </a>
