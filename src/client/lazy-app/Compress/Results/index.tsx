@@ -62,6 +62,7 @@ export default class Results extends Component<Props, State> {
   private onCopy = () => {
     // copy a image file into clipboard
     console.log(_resultImageFile)
+    // @ts-ignore
     navigator.clipboard.write([new ClipboardItem({['text/plain']: 'ok'})])
   }
 
