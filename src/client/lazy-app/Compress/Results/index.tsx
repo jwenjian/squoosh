@@ -21,7 +21,7 @@ interface State {
 }
 
 const loadingReactionDelay = 500;
-var _resultImageFile:File = null;
+var _resultImageFile:File | null = null;
 
 export default class Results extends Component<Props, State> {
   state: State = {
@@ -61,8 +61,7 @@ export default class Results extends Component<Props, State> {
 
   private onCopy = () => {
     // copy a image file into clipboard
-    console.log(this.props.imageFile);
-    navigator.clipboard.write([new ClipboardItem({"image/png": _resultImageFile})])
+    navigator.clipboard.write([new ClipboardItem({[_resultImageFile.type]: _resultImageFile})])
   }
 
   render(
