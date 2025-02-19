@@ -72,7 +72,9 @@ export default class Results extends Component<Props, State> {
       diff = imageFile.size / source.file.size;
       const absolutePercent = Math.round(Math.abs(diff) * 100);
       percent = diff > 1 ? absolutePercent - 100 : 100 - absolutePercent;
-      Object.defineProperty(window, "_resultFile", imageFile);
+      Object.defineProperty(window, "_resultFile", {
+        value: imageFile
+      });
     }
 
     return (
