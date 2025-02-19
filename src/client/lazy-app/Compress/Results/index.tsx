@@ -21,7 +21,7 @@ interface State {
 }
 
 const loadingReactionDelay = 500;
-var _resultImageFile;
+var _resultImageFile:File = null;
 
 export default class Results extends Component<Props, State> {
   state: State = {
