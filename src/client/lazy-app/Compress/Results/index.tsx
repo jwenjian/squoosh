@@ -21,6 +21,7 @@ interface State {
 }
 
 const loadingReactionDelay = 500;
+var _resultImageFile;
 
 export default class Results extends Component<Props, State> {
   state: State = {
@@ -61,7 +62,7 @@ export default class Results extends Component<Props, State> {
   private onCopy = () => {
     // copy a image file into clipboard
     console.log(this.props.imageFile);
-    navigator.clipboard.write([new ClipboardItem({"image/png": this.props.imageFile})])
+    navigator.clipboard.write([new ClipboardItem({"image/png": _resultImageFile})])
   }
 
   render(
@@ -77,6 +78,7 @@ export default class Results extends Component<Props, State> {
       diff = imageFile.size / source.file.size;
       const absolutePercent = Math.round(Math.abs(diff) * 100);
       percent = diff > 1 ? absolutePercent - 100 : 100 - absolutePercent;
+      _resultImageFile = imageFile;
     }
 
     return (
