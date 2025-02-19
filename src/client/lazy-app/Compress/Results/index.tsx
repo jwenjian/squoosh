@@ -62,8 +62,10 @@ export default class Results extends Component<Props, State> {
   private onCopy = () => {
     // copy a image file into clipboard
     console.log(_resultImageFile)
+    let b = new Blob([_resultImageFile], {type: _resultImageFile.type});
+    let ci = new ClipboardItem({[b.type]: b})
     // @ts-ignore
-    navigator.clipboard.write([new ClipboardItem({['text/plain']: 'ok'})])
+    navigator.clipboard.write([ci])
   }
 
   render(
